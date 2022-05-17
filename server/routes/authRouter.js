@@ -1,13 +1,11 @@
-import User from "../models/user.js";
+import User from "../models/userModel.js";
+import { validation } from "../middlewares/validationMiddleware.js";
+import { signUp } from "../controllers/authController.js";
+import { schema } from "../models/userModel.js";
+
 import express from "express";
 const router = express.Router();
 
-router.get("/signup", async (req, res) => {
-  const users = await User.findAll({
-    attributes: ["user_id", "name", "email"],
-  });
-  console.log(users);
-  res.json({ message: { users } });
-});
+router.post("/signup", validation(schema), signUp);
 
 export default router;
