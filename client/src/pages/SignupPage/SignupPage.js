@@ -42,7 +42,7 @@ export default function SignupPage() {
         password: password,
       });
     } catch (error) {
-      return toast.error('Account is already created!');
+      return toast.error('Signed up failed! Check your data!');
     }
     toast.success('You successfully signed up!');
     navigate('/login');
@@ -66,6 +66,8 @@ export default function SignupPage() {
               onChange={handleChange}
               placeholder="Write down your name"
               autoComplete="off"
+              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*.{3,40}$"
+              title="Name must have min 3 letters and may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz, d'Artagnan"
               required
             />
           </label>
@@ -79,6 +81,8 @@ export default function SignupPage() {
               onChange={handleChange}
               placeholder="Write down your e-mail"
               autoComplete="off"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+              title="Email must have valid email address"
               required
             />
           </label>
@@ -92,6 +96,8 @@ export default function SignupPage() {
               onChange={handleChange}
               placeholder="Write down your password"
               autoComplete="off"
+              pattern=".{3,20}$"
+              title="Password must have min 3 letters"
               required
             />
           </label>
