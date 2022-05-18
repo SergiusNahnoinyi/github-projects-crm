@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.avatar {
+  margin-right: 4px;
+}
+
+.name {
+  font-weight: bold;
+  margin-right: 12px;
+}
+
+.button {
+  display: block;
+  margin: 0 auto;
+  padding: 8px 12px;
+  font-weight: var(--primary-font-weight);
+  background-color: transparent;
+  border: 2px solid var(--accent-color);
+  border-radius: 4px;
+  cursor: pointer;
+}

@@ -31,10 +31,14 @@ export default function LoginPage() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4000/api/auth/login', {
-        email: email,
-        password: password,
-      });
+      await axios
+        .post('http://localhost:4000/api/auth/login', {
+          email: email,
+          password: password,
+        })
+        .then(response => {
+          localStorage.setItem('token', JSON.stringify(response.data.token));
+        });
     } catch (error) {
       return toast.error('Log in failed! Check your data or sign up!');
     }

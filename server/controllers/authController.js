@@ -82,3 +82,28 @@ export const logIn = async (req, res, next) => {
     next(error);
   }
 };
+
+export const logOut = async (req, res, next) => {
+  const { id } = req.user;
+  try {
+    const user = await User.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!user) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
+    await User.update(
+      { token: null },
+      {
+        where: {
+          id: user.id,
+        },
+      }
+    );
+    return res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+};
