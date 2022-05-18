@@ -17,6 +17,8 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
+import("./config/passport.js");
+
 app.use("/api/auth", router);
 
 app.use((req, res) => {
@@ -25,7 +27,7 @@ app.use((req, res) => {
     code: 404,
     message: `Use api on routes: 
     POST /api/auth/signup - sign up user { email, password}
-    POST /api/auth/signin - log in user { email, password }`,
+    POST /api/auth/login - log in user { email, password }`,
     data: "Not found",
   });
 });

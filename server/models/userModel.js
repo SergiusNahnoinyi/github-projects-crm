@@ -14,10 +14,13 @@ const User = sequelize.define(
     password: {
       type: Sequelize.STRING,
     },
+    token: {
+      type: Sequelize.STRING,
+      defaultValue: null,
+    },
   },
   {
     freezeTableName: true,
-    timestamps: false,
   }
 );
 
