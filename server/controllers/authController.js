@@ -76,6 +76,7 @@ export const logIn = async (req, res, next) => {
       message: "Success",
       code: 200,
       token,
+      name: user.name,
       email,
     });
   } catch (error) {
@@ -103,6 +104,31 @@ export const logOut = async (req, res, next) => {
       }
     );
     return res.status(204).json();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCurrentUser = async (req, res, next) => {
+  const { id } = req.user;
+  try {
+    const user = await User.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: "Not authorized" });
+    }
+
+    return res.json({
+      message: "Success",
+      code: 200,
+      token: user.token,
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
     next(error);
   }

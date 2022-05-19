@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+import { authOperations } from '../../redux/auth';
 
 import s from './SignupPage.module.css';
 
 export default function SignupPage() {
+  const dispatch = useDispatch();
   let navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -35,16 +37,7 @@ export default function SignupPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:4000/api/auth/signup', {
-        name: name,
-        email: email,
-        password: password,
-      });
-    } catch (error) {
-      return toast.error('Signed up failed! Check your data!');
-    }
-    toast.success('You successfully signed up!');
+    dispatch(authOperations.signUp({ name, email, password }));
     navigate('/login');
     setName('');
     setEmail('');

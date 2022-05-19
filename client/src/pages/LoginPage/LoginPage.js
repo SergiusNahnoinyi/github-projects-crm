@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+import { authOperations } from '../../redux/auth';
 
 import s from './LoginPage.module.css';
 
 export default function LoginPage() {
-  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,20 +30,7 @@ export default function LoginPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      await axios
-        .post('http://localhost:4000/api/auth/login', {
-          email: email,
-          password: password,
-        })
-        .then(response => {
-          localStorage.setItem('token', JSON.stringify(response.data.token));
-        });
-    } catch (error) {
-      return toast.error('Log in failed! Check your data or sign up!');
-    }
-    toast.success('You successfully logged in!');
-    navigate('/projects');
+    dispatch(authOperations.logIn({ email, password }));
     setEmail('');
     setPassword('');
   };
