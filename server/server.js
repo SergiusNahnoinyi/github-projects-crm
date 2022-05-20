@@ -1,5 +1,5 @@
-import router from "./routes/authRouter.js";
-import sequelize from "./config/db.js";
+import authRouter from "./routes/authRouter.js";
+import projectsRouter from "./routes/projectsRouter.js";
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
@@ -19,7 +19,8 @@ app.use(express.json());
 
 import("./config/passport.js");
 
-app.use("/api/auth", router);
+app.use("/api/auth", authRouter);
+app.use("/api/projects", projectsRouter);
 
 app.use((req, res) => {
   res.status(404).json({

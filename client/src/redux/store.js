@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-
+// import { projectsApi } from '../services/projectsApi';
 import { authReducer } from './auth';
-// import { projectsReducer } from './projects';
 
 export const store = configureStore({
   reducer: {
+    // [projectsApi.reducerPath]: projectsApi.reducer,
     auth: authReducer,
-    // projects: projectsReducer,
   },
+  // middleware: GetDefaultMiddleware => [
+  // ...GetDefaultMiddleware(),
+  // projectsApi.middleware,
+  // ],
   devTools: process.env.NODE_ENV === 'development',
 });
