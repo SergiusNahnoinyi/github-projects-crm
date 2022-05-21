@@ -6,6 +6,7 @@ axios.defaults.baseURL = 'http://localhost:4000/api';
 const fetchProjects = async data => {
   try {
     await axios.post('/projects', {
+      proj_id: `${data.proj_id}`,
       owner: `${data.owner}`,
       name: `${data.name}`,
       html_url: `${data.html_url}`,
@@ -29,9 +30,29 @@ const getProjects = async data => {
   }
 };
 
+const deleteProject = async projectId => {
+  try {
+    await axios.delete(`/projects/${projectId}`);
+    toast.success('You successfully deleted a project!');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const updateProject = async projectId => {
+  try {
+    await axios.patch(`/projects/${projectId}`);
+    toast.success('You successfully deleted a project!');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const projectsApi = {
   fetchProjects,
   getProjects,
+  deleteProject,
+  updateProject,
 };
 
 export default projectsApi;

@@ -23,7 +23,9 @@ export default function ProjectsPage() {
   const handleSubmit = async e => {
     e.preventDefault();
     githubApi.getRepobySearchQuery(query).then(response => {
-      const similarRepo = data.find(({ id }) => id === response.id);
+      const similarRepo = data.find(
+        ({ proj_id }) => proj_id === response.proj_id,
+      );
       if (similarRepo) {
         return toast.error(`This repo is already in your list`);
       }
@@ -33,6 +35,18 @@ export default function ProjectsPage() {
 
     setQuery('');
   };
+
+  const onDelete = proj_id => {
+    projectsApi
+      .deleteProject(proj_id)
+      .then(setData(data.filter(project => project.proj_id !== proj_id)));
+  };
+
+  // const onUpdate = id => {
+  //   projectsApi
+  //     .updateProject(id)
+  //     .then(setData(data.filter(project => project.id !== id)));
+  // };
 
   return (
     <main>
@@ -69,7 +83,7 @@ export default function ProjectsPage() {
           <tbody>
             {data &&
               data.map(data => (
-                <tr key={data.id}>
+                <tr key={data.proj_id}>
                   <td>{data.owner}</td>
                   <td>{data.name}</td>
                   <td>{data.html_url}</td>
@@ -79,15 +93,13 @@ export default function ProjectsPage() {
                   <td>{data.created_at}</td>
                   <td>
                     <button
-                    // onClick={() => onDelete(contact.id)}
+                    // onClick={() => onUpdate(data.id)}
                     >
                       Update
                     </button>
                   </td>
                   <td>
-                    <button
-                    // onClick={() => onDelete(contact.id)}
-                    >
+                    <button onClick={() => onDelete(data.proj_id)}>
                       Delete
                     </button>
                   </td>

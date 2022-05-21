@@ -17,6 +17,7 @@ export const getProjects = async (req, res, next) => {
 export const addProject = async (req, res, next) => {
   const { id } = req.user;
   const {
+    proj_id,
     owner,
     name,
     html_url,
@@ -28,7 +29,7 @@ export const addProject = async (req, res, next) => {
   const isSimilarProject = await Project.findOne({
     where: {
       user_id: id,
-      owner,
+      owner: owner,
     },
   });
   if (isSimilarProject) {
@@ -41,6 +42,7 @@ export const addProject = async (req, res, next) => {
   try {
     const project = await Project.create({
       user_id: id,
+      proj_id,
       owner,
       name,
       html_url,
@@ -56,8 +58,10 @@ export const addProject = async (req, res, next) => {
 };
 
 export const updateProject = async (req, res, next) => {
+  const { id } = req.user;
   const {
-    description,
+    proj_id,
+    owner,
     name,
     html_url,
     stargazers_count,
@@ -69,7 +73,8 @@ export const updateProject = async (req, res, next) => {
   try {
     const project = await Project.findOne({
       where: {
-        id: projectId,
+        proj_id: projectId,
+        user_id: id,
       },
     });
     if (!project) {
@@ -77,6 +82,7 @@ export const updateProject = async (req, res, next) => {
     }
     await Project.update(
       {
+        proj_id,
         owner,
         name,
         html_url,
@@ -101,10 +107,12 @@ export const updateProject = async (req, res, next) => {
 
 export const deleteProject = async (req, res, next) => {
   const { projectId } = req.params;
+  const { id } = req.user;
   try {
     const project = await Project.findOne({
       where: {
-        id: projectId,
+        proj_id: projectId,
+        user_id: id,
       },
     });
     if (!project) {

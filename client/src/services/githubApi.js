@@ -20,7 +20,7 @@ async function getRepobySearchQuery(query) {
     } = response.data;
 
     return {
-      id,
+      proj_id: id,
       owner: owner.login,
       name,
       html_url,

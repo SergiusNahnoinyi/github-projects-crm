@@ -12,10 +12,8 @@ const project = Project.init(
         key: "id",
       },
     },
-    id: {
+    proj_id: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
     },
     owner: {
       type: DataTypes.STRING(255),
