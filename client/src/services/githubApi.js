@@ -1,22 +1,12 @@
 import { Octokit } from '@octokit/core';
 
 const octokit = new Octokit({
-  // auth: 'token',
   accept: 'application/vnd.github.v3+json',
 });
 
 async function getRepobySearchQuery(query) {
-  if (!query) {
-    return;
-  }
   try {
-    const response = await octokit.request(
-      `GET /repos/${query}`,
-      //   {
-      //   owner: 'SergiusNahnoinyi',
-      //   repo: 'github-projects-crm',
-      // }
-    );
+    const response = await octokit.request(`GET /repos/${query}`);
 
     const {
       id,

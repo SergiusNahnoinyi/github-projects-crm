@@ -1,4 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { authOperations, authSelectors } from './redux/auth';
+
+import { Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
 import { ToastContainer } from 'react-toastify';
@@ -15,8 +19,15 @@ const SignupPage = lazy(() => import('./pages/SignupPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage'));
 
 export default function App() {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(authSelectors.getLoading);
+
+  useEffect(() => {
+    dispatch(authOperations.fetchCurrentUser());
+  }, [dispatch]);
+
   return (
-    <BrowserRouter>
+    !isLoading && (
       <Container>
         <AppBar />
         <Suspense fallback="Loading...">
@@ -50,6 +61,6 @@ export default function App() {
         </Suspense>
         <ToastContainer />
       </Container>
-    </BrowserRouter>
+    )
   );
 }
