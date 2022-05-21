@@ -1,39 +1,56 @@
-import { Sequelize } from "sequelize";
-import sequelize from "../config/db.js";
+import { Sequelize, DataTypes, Model } from "sequelize";
+import db from "../config/db.js";
 
-const Project = sequelize.define(
-  "projects",
+class Project extends Model {}
+
+const project = Project.init(
   {
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "users",
+        key: "id",
+      },
+    },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     owner: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
-    repo: {
-      type: Sequelize.STRING,
+    name: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
-    url: {
-      type: Sequelize.STRING,
+    html_url: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
-    stars: {
-      type: Sequelize.STRING,
+    stargazers_count: {
+      type: DataTypes.STRING(255),
+      defaultValue: null,
     },
     forks: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(255),
+      defaultValue: null,
     },
-    issues: {
-      type: Sequelize.STRING,
+    open_issues: {
+      type: DataTypes.STRING(255),
+      defaultValue: null,
     },
-    date: {
-      type: Sequelize.STRING,
+    created_at: {
+      type: DataTypes.STRING(255),
     },
   },
   {
-    freezeTableName: true,
+    sequelize: db,
+    tableName: "projects",
+    timestamps: true,
+    createdAt: false,
   }
 );
 
-(async () => {
-  console.log("Database connected successfully");
-  await sequelize.sync();
-})();
-
-export default Project;
+export default project;

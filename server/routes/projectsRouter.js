@@ -1,6 +1,7 @@
 import Project from "../models/projectModel.js";
 import auth from "../middlewares/authMiddleware.js";
 import {
+  getProjects,
   addProject,
   updateProject,
   deleteProject,
@@ -8,6 +9,8 @@ import {
 
 import express from "express";
 const router = express.Router();
+
+router.get("/", auth, getProjects);
 
 router.post("/", auth, addProject);
 

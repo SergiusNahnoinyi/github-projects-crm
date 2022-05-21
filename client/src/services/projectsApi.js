@@ -20,8 +20,18 @@ const fetchProjects = async data => {
   }
 };
 
+const getProjects = async data => {
+  try {
+    const response = await axios.get('/projects');
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const projectsApi = {
   fetchProjects,
+  getProjects,
 };
 
 export default projectsApi;

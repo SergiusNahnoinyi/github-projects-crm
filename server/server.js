@@ -1,11 +1,13 @@
-import authRouter from "./routes/authRouter.js";
-import projectsRouter from "./routes/projectsRouter.js";
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
-
 dotenv.config();
+
+import db from "./config/db.js";
+import authRouter from "./routes/authRouter.js";
+import projectsRouter from "./routes/projectsRouter.js";
+import("./config/passport.js");
 
 const PORT = process.env.PORT || 5000;
 
@@ -16,8 +18,6 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-
-import("./config/passport.js");
 
 app.use("/api/auth", authRouter);
 app.use("/api/projects", projectsRouter);
@@ -43,6 +43,14 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`);
-});
+db.sync()
+  .then(() => {
+    app.listen(PORT, function () {
+      console.log("Database connected successfully!");
+      console.log(`Server is running on port: ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log(`Server is not running. Error message: ${err.message}!`);
+    db.close();
+  });

@@ -1,6 +1,21 @@
 import Project from "../models/projectModel.js";
 
+export const getProjects = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const projects = await Project.findAll({
+      where: {
+        user_id: id,
+      },
+    });
+    res.json(projects);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addProject = async (req, res, next) => {
+  const { id } = req.user;
   const {
     owner,
     name,
@@ -12,7 +27,8 @@ export const addProject = async (req, res, next) => {
   } = req.body;
   const isSimilarProject = await Project.findOne({
     where: {
-      owner: owner,
+      user_id: id,
+      owner,
     },
   });
   if (isSimilarProject) {
@@ -24,13 +40,14 @@ export const addProject = async (req, res, next) => {
   }
   try {
     const project = await Project.create({
-      owner: owner,
-      repo: name,
-      url: html_url,
-      stars: stargazers_count,
-      forks: forks,
-      issues: open_issues,
-      date: created_at,
+      user_id: id,
+      owner,
+      name,
+      html_url,
+      stargazers_count,
+      forks,
+      open_issues,
+      created_at,
     });
     res.status(201).json({ message: "Created", code: 201, data: { project } });
   } catch (error) {
@@ -60,13 +77,13 @@ export const updateProject = async (req, res, next) => {
     }
     await Project.update(
       {
-        owner: description,
-        repo: name,
-        url: html_url,
-        stars: stargazers_count,
-        forks: forks,
-        issues: open_issues,
-        date: created_at,
+        owner,
+        name,
+        html_url,
+        stargazers_count,
+        forks,
+        open_issues,
+        created_at,
       },
       {
         where: {

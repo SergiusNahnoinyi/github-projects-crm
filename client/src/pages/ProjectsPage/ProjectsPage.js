@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
-import githubAPI from '../../services/githubApi';
+import githubApi from '../../services/githubApi';
 import projectsApi from '../../services/projectsApi';
 
 import s from './ProjectsPage.module.css';
@@ -10,17 +10,20 @@ export default function ProjectsPage() {
   const [query, setQuery] = useState('');
   const [data, setData] = useState([]);
 
+  useEffect(() => {
+    projectsApi.getProjects().then(response => {
+      setData(response);
+    });
+  }, []);
+
   const handleChange = e => {
     setQuery(e.currentTarget.value);
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
-    githubAPI.getRepobySearchQuery(query).then(response => {
+    githubApi.getRepobySearchQuery(query).then(response => {
       const similarRepo = data.find(({ id }) => id === response.id);
-      if (!response) {
-        toast.error('Not found');
-      }
       if (similarRepo) {
         return toast.error(`This repo is already in your list`);
       }

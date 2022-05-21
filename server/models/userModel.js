@@ -1,26 +1,41 @@
-import { Sequelize } from "sequelize";
-import sequelize from "../config/db.js";
+import { Sequelize, DataTypes, Model } from "sequelize";
 import Joi from "joi";
 
-const User = sequelize.define(
-  "users",
+import db from "../config/db.js";
+import Project from "./projectModel.js";
+
+class User extends Model {}
+
+const user = User.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     email: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     token: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING(255),
       defaultValue: null,
     },
   },
   {
-    freezeTableName: true,
+    sequelize: db,
+    tableName: "users",
+    timestamps: true,
+    createdAt: "created_at",
+    updatedAt: "updated_at",
   }
 );
 
@@ -32,9 +47,6 @@ export const schema = Joi.object({
   password: Joi.string().min(3).max(40).required(),
 });
 
-(async () => {
-  console.log("Database connected successfully");
-  await sequelize.sync();
-})();
+user.hasMany(Project, { as: "projects", foreignKey: "user_id" });
 
-export default User;
+export default user;
