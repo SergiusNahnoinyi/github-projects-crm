@@ -42,7 +42,7 @@ const deleteProject = async projectId => {
 const updateProject = async projectId => {
   try {
     await axios.patch(`/projects/${projectId}`);
-    toast.success('You successfully deleted a project!');
+    toast.success('You successfully updated a project!');
   } catch (error) {
     console.log(error);
   }

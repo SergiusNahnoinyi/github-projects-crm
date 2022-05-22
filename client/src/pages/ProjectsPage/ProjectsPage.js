@@ -17,7 +17,7 @@ export default function ProjectsPage() {
   }, []);
 
   const handleChange = e => {
-    setQuery(e.currentTarget.value);
+    setQuery(e.currentTarget.value.replace(/ /g, ''));
   };
 
   const handleSubmit = async e => {
@@ -53,7 +53,7 @@ export default function ProjectsPage() {
       <section>
         <form className={s.form} onSubmit={handleSubmit}>
           <label className={s.label}>
-            Username/Project(without spaces)
+            Username/Project
             <input
               className={s.input}
               type="text"

@@ -1,4 +1,3 @@
-import User from "../models/userModel.js";
 import { validation } from "../middlewares/validationMiddleware.js";
 import auth from "../middlewares/authMiddleware.js";
 import { schema } from "../models/userModel.js";
