@@ -9,7 +9,6 @@ import authRouter from "./routes/authRouter.js";
 import projectsRouter from "./routes/projectsRouter.js";
 import("./config/passport.js");
 
-// const PORT = process.env.DB_PORT || 5000;
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
 const ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:8081";
 
