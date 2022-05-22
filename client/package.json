@@ -2,7 +2,6 @@
   "name": "github-projects-crm",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sergiusnahnoinyi.github.io/github-projects-crm",
   "dependencies": {
     "@octokit/core": "^3.6.0",
     "@reduxjs/toolkit": "^1.8.1",
@@ -10,7 +9,6 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
-    "gh-pages": "^4.0.0",
     "modern-normalize": "^1.1.0",
     "proptypes": "^1.1.0",
     "react": "^18.1.0",
@@ -23,8 +21,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
