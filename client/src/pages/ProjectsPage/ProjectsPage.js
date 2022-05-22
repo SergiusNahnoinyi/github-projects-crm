@@ -41,13 +41,7 @@ export default function ProjectsPage() {
       .deleteProject(proj_id)
       .then(setData(data.filter(project => project.proj_id !== proj_id)));
   };
-
-  // const onUpdate = id => {
-  //   projectsApi
-  //     .updateProject(id)
-  //     .then(setData(data.filter(project => project.id !== id)));
-  // };
-
+  
   return (
     <main>
       <section>
@@ -91,13 +85,7 @@ export default function ProjectsPage() {
                   <td>{data.forks}</td>
                   <td>{data.open_issues}</td>
                   <td>{data.created_at}</td>
-                  <td>
-                    <button
-                    // onClick={() => onUpdate(data.id)}
-                    >
-                      Update
-                    </button>
-                  </td>
+
                   <td>
                     <button onClick={() => onDelete(data.proj_id)}>
                       Delete
