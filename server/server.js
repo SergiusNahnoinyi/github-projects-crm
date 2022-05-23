@@ -10,7 +10,7 @@ import projectsRouter from "./routes/projectsRouter.js";
 import("./config/passport.js");
 
 const PORT = process.env.NODE_DOCKER_PORT || 8080;
-const ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:8081";
+const ORIGIN = process.env.CLIENT_ORIGIN || "http://localhost:3000";
 
 const corsOptions = { origin: ORIGIN };
 
